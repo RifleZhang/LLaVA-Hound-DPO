@@ -3,11 +3,13 @@
 # TODO: Add discussion of gpt version and results
 # TODO: Add instruction on other sota running
 
+# One-line Video Instruction and Video Frames Setup
+```
+source setup/setup_test_data.sh
+```
+
 # Testing with one-line command 
 ```
-# setup data
-source setup/setup_test_data.sh
-
 # Eval for official (a subset of 5k qa)
 bash test/pipeline/outdomain_official_test_pipeline.sh \
 $model_output_name \
