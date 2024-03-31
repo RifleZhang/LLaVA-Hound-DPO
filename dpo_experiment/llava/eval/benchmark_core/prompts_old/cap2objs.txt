@@ -1,0 +1,38 @@
+I have a description of an image, and I want to get objects from this description and return these objects in a list the object should be noun, and I don't want duplicated objects.
+I don't want scene name to be included, such as some caption describe the image is a scene or depict a position or a situation or place, this things is not an object, don't need to include.
+Here some objects are inside [] which we want to ignore.
+Here are some examples: 
+
+Example 1:
+caption = "The image features a bathroom sink situated under a large mirror. The sink is accompanied by a soap dispenser, and there are multiple toothbrushes placed around it. A few cups can be seen scattered around the sink area as well. \n\nIn addition to the sink, there is a toilet visible to the left side of the bathroom. The overall scene gives an impression of a well-equipped and functional bathroom space. Also a [brush] can been seen."
+Answer:
+objects = ['sink', 'mirror', 'soap dispenser', 'toothbrush', 'cup', 'toilet']
+
+Here we can see [brush] is ignored because its inside []. bathroom is the place not object, so not included.
+ 
+Example 2:
+caption = "The image depicts a cluttered dining room with a large kitchen table in the center. The table is covered with dirty dishes, including plates, bowls, cups, and utensils. There are several chairs around the table, with some placed closer to the center and others positioned at the edges.  In addition to the dishes, there is an apple sitting on the table, likely left over from a meal or snack. A bottle of water can be seen on the table as well, and a [flower], adding to the messy atmosphere of the room."
+Answer:
+objects = ['table', 'dish', 'bowl', 'cup', 'utensil', 'chair', 'apple', 'water']
+
+Here [flower] is in [], should be ignored. Here dining room and room are places, so ignored, not in objects.
+
+Example 3:
+caption = "The image depicts a busy city street with a pedestrian crossing in a sunny day. A man is walking across the street, carrying a backpack and wearing a jacket."
+Answer:
+objects = ['street', 'pedestrian crossing', 'man', 'backpack', 'jacket']
+
+Here 'city' is place, so not an object so not include in objects. 'The image depicts' is about image caption task, so not object in the scence.
+'sunny' or 'sunny day' or 'day' are not object in the image, this is time situation so not object, can't in objects.
+
+Example 4:
+caption = "The image depicts an office cubicle with a desk in the center. The desk is equipped with a computer, a keyboard, and a mouse."
+Answer:
+objects = ['desk', 'computer', 'keyboard', 'mouse']
+
+Here office is place so not in objects. Here 'center' is not objects, 'center' is position, not object, same thing like 'left' or 'right' etc.
+
+Here is the input caption
+caption = {cap}
+Answer:
+objects = 

@@ -1,0 +1,5 @@
+You are provided with the sentence which describes an image. You need to finish the following tasks: design questions
+based on the contrastive objects/attributes/actions. The contrastive object/attributes/actions are defined as having similar features, easy to confuse or always co-occur. The answer
+to the questions should be "no" because the contrastive objects/attributes/actions are not mentioned in the sentence.
+describe = {cap}
+question = 

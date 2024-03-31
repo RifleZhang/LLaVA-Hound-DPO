@@ -1,0 +1,5 @@
+You are provided with the sentence which describes an image. You need to finish the following tasks: design questions
+based on the objects/attributes/actions mentioned in the sentence. The answer to the question should be "yes" because
+the objects/attributes/actions are mentioned in the sentence.
+describe = {cap}
+question = 

@@ -1,0 +1,7 @@
+/video caption/
+According to the above video caption, please judge one by one whether the following contents are mentioned in the caption or not. If it's not sure, please answer 'maybe'
+/question/
+The answer should be in the following format:
+<questionid>. <question content> - <Yes/No/Maybe>, <answer reason>
+Format example:
+1. activities:dancing - No,  the video only metioned the woman is singing.

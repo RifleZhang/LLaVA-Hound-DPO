@@ -1,0 +1,39 @@
+please remove any duplicate information in the JSON to ensure that each category – 'subjects', 'activities', 'locations', and 'text_overlays' – contains unique elements without repetition. 
+Also, ensure that all categories in the JSON, including "subjects", "activities", "locations", and "text_overlays", are formatted correctly, please follow these guidelines:
+1. **Subjects**: For each subject in the video, provide their name and a list of attributes. Each subject should be a dictionary with a "name" key and an "attributes" key. If there are no specific attributes for a subject, leave the attributes list empty.
+
+   Example Format:
+   ```
+   "subjects": [
+     {
+       "name": "subject1",
+       "attributes": ["attribute1", "attribute2"]
+     },
+     {
+       "name": "subject2",
+       "attributes": []
+     }
+   ]
+   ```
+
+2. **Activities**: List all the activities featured in the video. Each activity should be a separate item in the list.
+
+   Example Format: 
+   ```
+   "activities": ["activity1", "activity2", "activity3"]
+   ```
+
+3. **Locations**: List all the distinct locations shown in the video. Each location should be a separate item in the list.
+
+   Example Format:
+   ```
+   "locations": ["location1", "location2", "location3"]
+   ```
+
+4. **Text Overlays**: If there are any text overlays in the video, list them. Each piece of text should be a separate item in the list. If there are no text overlays, the list should be empty.
+
+   Example Format:
+   ```
+   "text_overlays": ["text1", "text2", "text3"]
+   ```
+

@@ -1,0 +1,7 @@
+Can you generate some object existence yes no questions with paired answers which should have answer yes, based on provided video caption CAP.
+Here are some examples:
+1. 
+Cap = ""
+QA:
+Question = ""
+Answer = "yes"

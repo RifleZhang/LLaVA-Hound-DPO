@@ -1,0 +1,52 @@
+Please review the provided video caption and create a JSON representation.  The 'subjects' should list the main characters or entities in the video along with their distinctive attributes. 'Activities' should describe what actions or events are taking place. 'Locations' should pinpoint where the video is set, and 'text_overlays' should mention any text that appears in the video. Remember, clarity and precision are key.
+JSON format:
+{
+  "subjects": [
+    {
+      "name": "<Insert subject name here>",
+      "attributes": [
+        "<Insert subject attributes here separated by commas>"
+      ]
+    },
+    {
+      "name": "<Insert subject name here>",
+      "attributes": [
+        "<Insert subject attributes here separated by commas>"
+      ]
+    }
+  ],
+  "activities": [
+    "<Insert activities here separated by commas>"
+  ],
+  "locations": [
+    "<Insert locations here separated by commas>"
+  ],
+  "text_overlays": [
+    "<Insert text overlays here separated by commas>"
+  ]
+}
+
+
+Example: 
+video caption: The video content primarily features a young boy in various casual settings. The boy is then seen wearing filter pink swimming goggles in different scenes, either lying on a couch or sitting. The scenes are generally relaxed and playful, with the pink goggles adding a unique touch to the images. The video concludes with the boy still wearing the filter goggles.
+Answer:
+{
+  "subjects": [
+    {
+      "name": "young boy",
+      "attributes": [
+        "wearing filter pink swimming goggles",
+      ]
+    }
+  ],
+  "activities": [
+    "lying on a couch", "sitting"
+  ],
+  "locations": [
+    "various casual settings"
+  ],
+  "text_overlays": []
+}
+
+The following is the input video caption:
+video caption: /video caption/

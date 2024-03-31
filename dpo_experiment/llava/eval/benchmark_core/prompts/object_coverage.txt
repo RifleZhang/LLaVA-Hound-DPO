@@ -1,0 +1,45 @@
+I have two list of objects, list_A and list_B, I want to return a list named uncover which find items in list_B doesn't appear in list_A, 
+sometimes same object can be expressed in different ways in list_A and list_B, we treat different expression but similar meaning objects as matched, not include in mistmatch list.
+
+For example
+list_A = ['two cars', 'dark bagpack', 'yellow jacket', 'light', 'brick building', 'wood chair', 'chair', 'green car', 'dining room table', 'bike', 'city street', 'traffic light', 'sedan']
+list_B = ['reflection of light', 'view of office building', 'street chair', 'white car', 'red car', 'dark hair']
+
+Answer:
+uncover = ['reflection of light', 'dark hair']
+
+In this example
+'reflection of light' cannot find matched object in list_A, especially, 'light' is not equal to 'reflection of light'.
+'view of office building' in list_B can find matched object 'brick building' although they are not exactly same but they point to similar object.
+'street chair' in list_B can find 'chair', 'wood chair' in list_A which is an alternate expression of 'chair'.
+'white car' in list_B can find 'two cars' in list_A.
+'red car' in list_B can find 'two cars' in list_A.
+'dark hair' in list_B cannot find anything similar in list_A
+
+Another example
+list_A = ['bag', 'cloth', 'boy', 'Drinking glasses', 'table']
+list_B =['backpack', 'jacket', 'young man', 'cup', 'kitchen table', 'plate', 'apple']
+Answer:
+uncover = ['plate', 'apple']
+
+In this example, 
+'backpack' in list_B can find 'bag' in list_A has similar meaning, matched.
+'jacket' in list_B can be seen as a kind of 'cloth' in list_A still matching;
+'young man' in list_B can match 'boy' in list_A;
+'cup' in list_B is similar to 'Drinking glasses' in list_A;
+'kitchen table' is a kind of table as 'table' in list_A so there is no uncovered items.
+'plate' in list_B but no object has same or similar meaning in list_A.
+'apple' in list_B but no object has same or similar meaning in list_A.
+
+Another example
+list_A = ['keyboard', 'mouse', 'moniter', 'cpu']
+list_B = ['computer']
+Answer:
+uncover = []
+'computer' in list_B can find 'keyboard', 'mouse', 'moniter', 'cpu' as whole thing in list_A, matched.
+
+Here is the inputs
+list_A = {cap_obj}
+list_B = {gt}
+Answer:
+uncover = 
