@@ -69,3 +69,15 @@ ShareGPTVideo/LLaVA-Hound-DPO
 
   Reference: [Chat-UniVi: Unified Visual Representation Empowers Large Language Models with Image and Video Understanding](https://arxiv.org/abs/2311.08046)
 
+
+# Customized Model Testing Instruction
+Requirement: 
+1. pretrained model ckpt, better a [huggingface model card](https://huggingface.co/docs/hub/en/model-cards)
+2. inference function takes video or frames as input.
+
+Only two parts need to be implemented:
+1. [model_loading_function](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/chatuniv/run_test/inference/inference_test_qa.py#L62)
+2. [Inference function](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/chatuniv/chatuniv_utils.py#L120) 
+
+
+
