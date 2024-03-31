@@ -61,10 +61,11 @@ ShareGPTVideo/LLaVA-Hound-DPO
 1. One-line testing for [Video-ChatGPT](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/video_chatgpt/README.md)
 
    Reference: [Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models](https://arxiv.org/abs/2306.05424)
-2. One-line testing for LLama-Vid:
+2. One-line testing for [LLama-Vid](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llama_vid/README.md):
 
   Reference: [LLaMA-VID: An Image is Worth 2 Tokens in Large Language Models](https://arxiv.org/abs/2311.17043)
-3. One-line testing for ChatUniV: 
+  
+3. One-line testing for [Chat-UniVi](https://github.com/RifleZhang/LLaVA-Hound-DPO/tree/main/chatuniv): 
 
   Reference: [Chat-UniVi: Unified Visual Representation Empowers Large Language Models with Image and Video Understanding](https://arxiv.org/abs/2311.08046)
 
