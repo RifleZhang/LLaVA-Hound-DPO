@@ -3,8 +3,13 @@
 First run one-line set up of video instruction and frames in the [test readme](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/test/README.md)
 
 # Download LLama-Vid
+7b testing run
 ```
 source set_var.sh
+```
+13b testing run
+```
+source set_var_13b.sh
 ```
 
 # Benchmark Testing
