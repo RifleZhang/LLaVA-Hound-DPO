@@ -27,3 +27,9 @@ bash test/pipeline/outdomain_test_pipeline.sh \
 $model_output_name \
 $model_name
 ```
+Exampe of official testing with dpo model
+```
+bash test/pipeline/outdomain_official_test_pipeline.sh \
+videollava_dpo \
+ShareGPTVideo/LLaVA-Hound-DPO
+```
