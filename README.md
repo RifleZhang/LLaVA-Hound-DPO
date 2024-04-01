@@ -1,5 +1,7 @@
 # <h1>LLaVA-Hound:<br> Video Large Multimodal Models from Large-scale Training</h1>
 
+Official implementation for paper: **Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**
+
 # Dataset and Model
 In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 
