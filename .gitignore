@@ -1,3 +1,4 @@
+setup/set_path_secret.sh
 */model_zoo
 __pycache__/
 *.pdf
