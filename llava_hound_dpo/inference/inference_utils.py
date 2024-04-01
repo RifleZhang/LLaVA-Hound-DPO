@@ -19,6 +19,16 @@ def remove_special_tokens(text):
             text = text.replace(token, "").strip()
     return text
 
+def decode2frame(video_path, frame_dir=None, verbose=False):
+    if frame_dir is None:
+        frame_dir, _ = os.path.splitext(video_path)
+    os.makedirs(frame_dir, exist_ok=True)
+    output_dir = f"{frame_dir}/c01_%04d.jpeg"
+    cmd = 'ffmpeg -loglevel quiet -i {} -vf "scale=336:-1,fps=2" {}'.format(video_path, output_dir)
+    if verbose:
+        print(cmd)
+    os.system(cmd)
+
 class ModelInference:
     def __init__(self, model, tokenizer, processor, context_len):
         self.model=model
@@ -27,7 +37,7 @@ class ModelInference:
         self.context_len = context_len
 
     @torch.no_grad()
-    def generate(self, question, modal_path, modal_type='VIDEO', video_decode_backend='frames', temperature=0.7, top_p=0.9, max_new_tokens=512):
+    def generate(self, question, modal_path, modal_type='VIDEO', video_decode_backend='frames', temperature=0.7, top_p=0.9, max_new_tokens=512, **kwargs):
         """
         Run inference using the Video-ChatGPT model.
 
@@ -99,7 +109,7 @@ class ModelInference:
                 top_p=top_p,
                 max_new_tokens=max_new_tokens,
                 use_cache=True,
-                stopping_criteria=[stopping_criteria],
+                stopping_criteria=[stopping_criteria]
             )
 
         input_token_len = input_ids.shape[1]

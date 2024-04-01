@@ -43,41 +43,29 @@ def get_image(image_path):
 
 def load_frames(frames_dir):
     results = []
-    frame_files = list(os.listdir(frames_dir))
-    # sort frame by name, converted to int
-    frame_files = sorted(frame_files, key=lambda x: int(x.split('.')[0]))
-    for frame_name in frame_files:
+    frame_names = os.listdir(frames_dir)
+    frame_names.sort()
+    for frame_name in frame_names:
         image_path = f"{frames_dir}/{frame_name}"
-        image = get_image(image_path)
-        results.append(image)
+        results.append(image_path)
     return results
 
 def sample_frames(frames, num_segments):
-    frame_indices = list(range(len(frames)))
-    cand_indices = copy.deepcopy(frame_indices)
-    intervals = np.linspace(start=0, stop=len(frame_indices), num=num_segments + 1).astype(int)
-    ranges = []
+    duration = len(frames)
+    frame_id_array = np.linspace(0, duration-1, num_segments, dtype=int)
+    frame_id_list = frame_id_array.tolist()
 
-    for idx, interv in enumerate(intervals[:-1]):
-        ranges.append((interv, intervals[idx + 1] - 1))
-
-    try:
-        frame_indices = [cand_indices[random.choice(range(x[0], x[1]))] for x in ranges]
-    except:
-        frame_indices = [cand_indices[x[0]] for x in ranges]
-
-    sampled_frames = [frames[indice] for indice in frame_indices]
-
+    sampled_frames = []
+    for frame_idx in frame_id_list:
+        single_frame_path = frames[frame_idx]
+        sampled_frames.append(single_frame_path)
     return sampled_frames
 
-# def get_video_transform():
-#     transform = Compose(
-#         [
-#             ShortSideScale(size=224),
-#             CenterCropVideo(224),
-#         ]
-#     )
-#     return transform
+def display_frames(video_path, indices=None):
+    frames = load_frames(video_path)
+    frames = sample_frames(frames, 8)
+    for frame_content in frames:
+        display_image(get_image(frame_content))
     
 def load_video_into_frames(
         video_path,
@@ -176,19 +164,9 @@ def load_image(path):
     '''
     return Image.open(path)
 
-def display_image(path):
-    '''
-    Displays an image located at the specified file path.
-
-    Parameters:
-    path (str): The file path of the image to be displayed.
-
-    Note:
-    This function does not return a value. It uses matplotlib to display the image within a Jupyter notebook or a Python environment that supports plotting.
-    '''
-    img = Image.open(path)
-    plt.imshow(img)
-    plt.axis('off')  # Turn off axis numbers
+def display_image(image):
+    plt.imshow(image)
+    plt.axis('off')  # Turn off axis numbers and labels
     plt.show()
 
 # ------- text processing -------
