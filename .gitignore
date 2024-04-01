@@ -1,0 +1,42 @@
+*/model_zoo
+*.pdf
+llama_vid/work_dirs
+dpo_experiment/trl_git
+*/nohup.out
+*/.locks
+dpo_experiment/transformers
+*.pt
+*/cache
+*.ttf
+*/cache_dir
+# Python
+video_llava/llava/serve
+__pycache__
+*.pyc
+*.egg-info
+dist
+**/.ipynb_checkpoints
+video_llava/cache
+video_llava/cache_dir
+
+# Log
+*.log
+*.log.*
+*.json
+*.jsonl
+
+# Data
+!**/alpaca-data-conversation.json
+
+# Editor
+.idea
+*.swp
+
+# Other
+.DS_Store
+wandb
+output
+
+cc3m
+checkpoints
+ckpts*
