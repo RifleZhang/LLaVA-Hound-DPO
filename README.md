@@ -1,5 +1,18 @@
-# LLaVA-Hound-DPO
+# <h1>LLaVA-Hound:<br> Video Large Multimodal Models from Large-scale Training</h1>
 
+# Dataset and Model
+In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
+
+**Datasets**:
+1. Test data: [ShareGPTVideo/test_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/test_video_and_instruction/tree/main)
+2. Fine-tuning data: TODO
+3. Pre-training data: TODO
+
+**Models**:
+1. Pre-trained ckpt on large scale video (and image) caption: [ShareGPTVideo/LLaVA-Hound-Pretrain](ShareGPTVideo/LLaVA-Hound-Pretrain)
+2. Fine-tuned ckpt on video (and image) instruction: [ShareGPTVideo/LLaVA-Hound-SFT](https://huggingface.co/ShareGPTVideo/LLaVA-Hound-SFT)
+3. DPO ckpt with 17k video preference data: [ShareGPTVideo/LLaVA-Hound-DPO](https://huggingface.co/ShareGPTVideo/LLaVA-Hound-DPO)
+4. Additionaly, [ShareGPTVideo/LLaVA-Hound-SFT-Image_only](https://huggingface.co/ShareGPTVideo/LLaVA-Hound-SFT-Image_only/settings)
 # setup:
 ```bash
 # setup requirements
