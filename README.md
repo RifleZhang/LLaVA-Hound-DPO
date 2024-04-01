@@ -22,23 +22,42 @@ source setup/setup_env.sh
 ```
 
 # inference example
+```bash
+cd llava_hound_dpo
+sudo apt-get install ffmpeg
+```
+
 ```python
 from llava.model.builder import load_pretrained_model
 from llava.mm_utils import get_model_name_from_path
-from inference.inference_utils import ModelInference
+from inference.inference_utils import ModelInference, decode2frame
+
+video_path = "example/sample_msrvtt.mp4"
 
 model_path = "ShareGPTVideo/LLaVA-Hound-DPO"
 model_name = get_model_name_from_path(model_path)
 tokenizer, model, processor, context_len = load_pretrained_model(model_path, model_base = None, model_name=model_name, cache_dir=os.environ['CACHE_DIR'])
+inference_model = ModelInference(model=model, tokenizer=tokenizer, processor=processor, context_len=context_len)
 
-video_path = "{}/video_data/test/msrvtt/video7671"
-question="What is this video about?"
+# our pipeline
+frame_dir, _ = os.path.splitext(video_path)
+decode2frame(video_path, frame_dir, verbose=True)
+question="What is the evident theme in the video?"
+response = inference_model.generate(
+    question=question,
+    modal_path=frame_dir,
+    temperature=0,
+)
+print(response)
 
-inference_model.generate(
+# using decord 
+response = inference_model.generate(
     question=question,
     modal_path=video_path,
     temperature=0,
+    video_decode_backend="decord",
 )
+print(response)
 ```
 # Testing with one-line command 
 ```bash
