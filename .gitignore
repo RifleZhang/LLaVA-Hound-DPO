@@ -1,4 +1,5 @@
 */model_zoo
+__pycache__/
 *.pdf
 llama_vid/work_dirs
 dpo_experiment/trl_git

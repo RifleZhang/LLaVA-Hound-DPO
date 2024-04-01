@@ -22,11 +22,11 @@ import torch
 from llava.model import *
 from llava.constants import DEFAULT_X_PATCH_TOKEN, DEFAULT_X_START_TOKEN, DEFAULT_X_END_TOKEN
 
-
-def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, load_4bit=False, device_map="auto", device="cuda", use_flash_attn=False, legacy=False):
+CACHE_DIR=os.environ.get('cache_dir', None)
+def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, load_4bit=False, device_map="auto", device="cuda", use_flash_attn=False, legacy=False, cache_dir=CACHE_DIR):
     kwargs = {"device_map": device_map,
               # "offload_folder": model_path,
-              "cache_dir": os.environ.get('cache_dir', './cache'),
+              "cache_dir": cache_dir,
               }
 
     if load_8bit:
@@ -92,7 +92,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
            
             tokenizer = AutoTokenizer.from_pretrained(
                 model_path, 
-                cache_dir=os.environ['cache_dir'],
+                cache_dir=cache_dir,
                 model_max_length=2048, # default
                 padding_side="right",
                 use_fast=False,
