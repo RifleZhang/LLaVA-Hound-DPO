@@ -3,6 +3,8 @@
 # TODO: Add discussion of gpt version and results
 
 # One-line cmd Video Instruction and Video Frames Setup
+Follow environment set up in [main page setup](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/README.md#setup)
+Download data
 ```
 source setup/setup_test_data.sh
 ```
