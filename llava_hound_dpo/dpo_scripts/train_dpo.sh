@@ -1,6 +1,6 @@
 input_model_name=${1:-"ShareGPTVideo/LLaVA-Hound-SFT"}
 output_model_name=${2:-"$SAVE_DIR/test/Video-LLaVA-DPO"}
-lr=${3:-"1e-7"}
+lr=${3:-"5e-7"}
 
 cache_dir=$CACHE_DIR
 export cache_dir=$cache_dir
