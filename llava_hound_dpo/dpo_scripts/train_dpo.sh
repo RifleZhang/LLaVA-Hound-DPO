@@ -6,7 +6,8 @@ cache_dir=$CACHE_DIR
 export cache_dir=$cache_dir
 
 # export WANDB_MODE=disabled
-export WANDB_PROJECT=llava-hound-dpo
+export WANDB_PROJECT=llava-hound
+export WANDB_NAME=dpo
 
 # gpu_ids=0
 gpu_ids=0,1,2,3,4,5,6,7
