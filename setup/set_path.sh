@@ -3,9 +3,6 @@ export DATA_DIR=""
 export SAVE_DIR=""
 export CACHE_DIR=""
 
-# huggingface token, for data, ckpt downloading
-export HF_TOKEN=""
-
 # OPENAI config
 export OPENAI_KEY=""
 export ORGANIZATION_KEY=""
@@ -26,6 +23,12 @@ export GPT_MODEL_NAME=""
 # export GPT_MODEL_NAME="gpt-3.5-turbo-1106"
 #----------------END INPUT required----------------
 
+# ----------------OPTIONAL INPUT----------------
+# huggingface token, wanbd token
+export HF_TOKEN=""
+export WANDB_API_KEY=""
+# ----------------END OPTIONAL INPUT----------------
+
 mkdir -p $DATA_DIR
 mkdir -p $SAVE_DIR
 mkdir -p $CACHE_DIR
@@ -34,11 +37,13 @@ export VIDEO_DATA_DIR=$DATA_DIR/video_data
 export TRAIN_VIDEO_DIR=${VIDEO_DATA_DIR}/train
 export TEST_VIDEO_DIR=${VIDEO_DATA_DIR}/test
 
+export TRAIN_DATA_DIR=${DATA_DIR}/video_instruction/train
 export TEST_DATA_DIR=${DATA_DIR}/video_instruction/test
 export TEST_RESULT_DIR=${DATA_DIR}/video_instruction/test_result
 
 mkdir -p $TRAIN_VIDEO_DIR
 mkdir -p $TEST_VIDEO_DIR
+mkdir -p $TRAIN_DATA_DIR
 mkdir -p $TEST_DATA_DIR
 mkdir -p $TEST_RESULT_DIR
 
