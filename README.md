@@ -3,7 +3,7 @@
 Official implementation for paper: **Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**
 
 ## Release
-- [4/3] DPO data and pipeline
+- [4/3] [DPO 17k data + training script](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/dpo_scripts/README.md), [pre-training video 900k + image 650k](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md)
 - [4/2] Project page set up, [paper preprint](https://arxiv.org/abs/2404.01258), Test data pipeline
 
 # Dataset and Model
