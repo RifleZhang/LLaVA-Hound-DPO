@@ -11,8 +11,11 @@ In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 
 **Datasets**:
 1. Test data: [ShareGPTVideo/test_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/test_video_and_instruction/tree/main)
-2. Fine-tuning data: [ShareGPTVideo/train_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/blob/main/README.md)
-3. Pre-training data: TODO
+   - original videos are released at [ShareGPTVideo/test_raw_video_data](https://huggingface.co/datasets/ShareGPTVideo/test_raw_video_data) in case of need.
+2. Train data [ShareGPTVideo/train_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/blob/main/README.md):
+   - 900k detailed caption  [caption](n/pretrain/video_caption_pretrain.jsonl),
+   - 900k frames data: [300k](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/train_300k) for finetuning, plus the rest [600k](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/train_600k), in total 900k for pre-training.
+
 
 **Models**:
 1. Pre-trained ckpt on large scale video (and image) caption: [ShareGPTVideo/LLaVA-Hound-Pretrain](ShareGPTVideo/LLaVA-Hound-Pretrain)
