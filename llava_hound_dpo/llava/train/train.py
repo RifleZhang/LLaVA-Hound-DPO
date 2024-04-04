@@ -21,7 +21,8 @@ from dataclasses import dataclass, field
 import json
 import logging
 import pathlib
-from typing import Dict, Optional, Sequence, List
+from typing import Dict, Optional, Sequence, List, Any
+from logzero import logger
 
 import torch
 
@@ -31,6 +32,7 @@ from llava.constants import IGNORE_INDEX, X_TOKEN_INDEX, DEFAULT_X_TOKEN, DEFAUL
 from torch.utils.data import Dataset
 from llava.train.llava_trainer import LLaVATrainer
 
+from data_processing.utils import load_jsonl, load_json
 from llava import conversation as conversation_lib
 from llava.model import *
 from llava.mm_utils import tokenizer_X_token
@@ -72,11 +74,13 @@ class DataArguments:
     is_multimodal: bool = False
     data_path: str = field(default=None,
                            metadata={"help": "Path to the training data."})
+    data_paths: List[str] = field(default_factory=list)
+    sample_ratios: List[int] = field(default_factory=list)
     image_folder: Optional[str] = field(default=None)
     image_aspect_ratio: str = 'square'
     image_grid_pinpoints: Optional[str] = field(default=None)
     video_folder: Optional[str] = field(default=None)
-
+    num_sample: Optional[int] = field(default=None)
 
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):
@@ -110,6 +114,7 @@ class TrainingArguments(transformers.TrainingArguments):
     lora_dropout: float = 0.05
     lora_weight_path: str = ""
     lora_bias: str = "none"
+    mm_projector_lr: Optional[float] = None
     group_by_modality_length: bool = field(default=False)
 
 
@@ -170,11 +175,13 @@ def get_mm_adapter_state_maybe_zero_3(named_params, keys_to_match):
 def find_all_linear_names(model):
     cls = torch.nn.Linear
     lora_module_names = set()
+    multimodal_keywords = ['mm_projector', 'vision_tower', 'vision_resampler']
     for name, module in model.named_modules():
+        if any(mm_keyword in name for mm_keyword in multimodal_keywords):
+            continue
         if isinstance(module, cls):
             names = name.split('.')
             lora_module_names.add(names[0] if len(names) == 1 else names[-1])
-
 
     if 'lm_head' in lora_module_names: # needed for 16-bit
         lora_module_names.remove('lm_head')
@@ -500,15 +507,14 @@ def preprocess(
 class LazySupervisedDataset(Dataset):
     """Dataset for supervised fine-tuning."""
 
-    def __init__(self, data_path: str,
+    def __init__(self, data_list: List[Any],
                  tokenizer: transformers.PreTrainedTokenizer,
                  data_args: DataArguments):
         super(LazySupervisedDataset, self).__init__()
-        list_data_dict = json.load(open(data_path, "r"))
 
         rank0_print("Formatting inputs...Skip in lazy mode")
         self.tokenizer = tokenizer
-        self.list_data_dict = list_data_dict
+        self.list_data_dict = data_list
         self.data_args = data_args
 
     def __len__(self):
@@ -592,7 +598,8 @@ class LazySupervisedDataset(Dataset):
                 # sources = preprocess_multimodal(make_conversation([e["detail"] for e in sources]), self.data_args)
                 has_X = 'video'
             else:
-                sources = copy.deepcopy([e["conversations"] for e in sources])
+                raise ValueError('No image or video in the data')
+                #sources = copy.deepcopy([e["conversations"] for e in sources])
 
             data_dict = preprocess(
                 sources,
@@ -678,12 +685,30 @@ class DataCollatorForSupervisedDataset(object):
         batch['images'] = [Xs, keys]  # we do not change the key's name.
         return batch
 
+def load_data(data_args):
+    if len(data_args.data_paths) == 0:
+        if 'jsonl' in data_args.data_path:
+            data_list = load_jsonl(data_args.data_path)
+        else: 
+            data_list = load_json(data_args.data_path)
+    else:
+        data_list = []
+        for data_path, sample_ratio in zip(data_args.data_paths, data_args.sample_ratios):
+            if 'jsonl' in data_path:
+                data_list.extend(load_jsonl(data_path) * sample_ratio)
+            else:
+                data_list.extend(load_json(data_path) * sample_ratio)
+    logger.info(f"data list length: {len(data_list)}")
+    return data_list
 
 def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer,
                                 data_args) -> Dict:
     """Make dataset and collator for supervised fine-tuning."""
+    data_list = load_data(data_args)
+    if data_args.num_sample is not None:
+        data_list = data_list[:data_args.num_sample]
     train_dataset = LazySupervisedDataset(tokenizer=tokenizer,
-                                data_path=data_args.data_path,
+                                data_list=data_list,
                                 data_args=data_args)
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
     return dict(train_dataset=train_dataset,
@@ -699,23 +724,8 @@ def train(attn_implementation=None):
     local_rank = training_args.local_rank
     compute_dtype = (torch.float16 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
 
-    bnb_model_from_pretrained_args = {}
     if training_args.bits in [4, 8]:
-        from transformers import BitsAndBytesConfig
-        bnb_model_from_pretrained_args.update(dict(
-            device_map={"": training_args.device},
-            load_in_4bit=training_args.bits == 4,
-            load_in_8bit=training_args.bits == 8,
-            quantization_config=BitsAndBytesConfig(
-                load_in_4bit=training_args.bits == 4,
-                load_in_8bit=training_args.bits == 8,
-                llm_int8_threshold=6.0,
-                llm_int8_has_fp16_weight=False,
-                bnb_4bit_compute_dtype=compute_dtype,
-                bnb_4bit_use_double_quant=training_args.double_quant,
-                bnb_4bit_quant_type=training_args.quant_type # {'fp4', 'nf4'}
-            )
-        ))
+        raise NotImplementedError("Quantization is not supported yet.")
 
     if model_args.image_tower is not None or model_args.video_tower is not None:  ####################################################
         model = LlavaLlamaForCausalLM.from_pretrained(
@@ -723,7 +733,6 @@ def train(attn_implementation=None):
             cache_dir=training_args.cache_dir,
             attn_implementation=attn_implementation,
             torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
-            **bnb_model_from_pretrained_args
         )
     else:
         model = transformers.LlamaForCausalLM.from_pretrained(
@@ -731,18 +740,12 @@ def train(attn_implementation=None):
             cache_dir=training_args.cache_dir,
             attn_implementation=attn_implementation,
             torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
-            **bnb_model_from_pretrained_args
         )
     model.config.use_cache = False
     model.config.X = model_args.X
 
     if model_args.freeze_backbone:
         model.model.requires_grad_(False)
-
-    if training_args.bits in [4, 8]:
-        from peft import prepare_model_for_kbit_training
-        model.config.torch_dtype=(torch.float32 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
-        model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=training_args.gradient_checkpointing)
 
     if training_args.gradient_checkpointing:
         if hasattr(model, "enable_input_require_grads"):
@@ -753,6 +756,7 @@ def train(attn_implementation=None):
             model.get_input_embeddings().register_forward_hook(make_inputs_require_grad)
 
     if training_args.lora_enable:
+        logger.info(f"init peft model")
         from peft import LoraConfig, get_peft_model
         lora_config = LoraConfig(
             r=training_args.lora_r,
@@ -769,7 +773,7 @@ def train(attn_implementation=None):
                 model.to(torch.float16)
         rank0_print("Adding LoRA adapters...")
         model = get_peft_model(model, lora_config)
-
+    
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         model_args.model_name_or_path,
         cache_dir=training_args.cache_dir,
@@ -797,11 +801,16 @@ def train(attn_implementation=None):
     if model_args.image_tower is not None or model_args.video_tower is not None:  #############################
 
         if model_args.image_tower is not None:
-            model.get_model().initialize_image_modules(
-                model_args=model_args,
-                fsdp=training_args.fsdp
-            )
             image_tower = model.get_image_tower()
+            if image_tower is None:
+                model.get_model().initialize_image_modules(
+                    model_args=model_args,
+                    fsdp=training_args.fsdp
+                )
+                image_tower = model.get_image_tower()
+            if not image_tower.is_loaded:
+                # print('load image tower')
+                image_tower.load_model()
             image_tower.to(dtype=torch.bfloat16 if training_args.bf16 else torch.float16, device=training_args.device)
 
             data_args.image_processor = image_tower.image_processor
@@ -811,11 +820,16 @@ def train(attn_implementation=None):
             model.config.image_grid_pinpoints = data_args.image_grid_pinpoints
 
         if model_args.video_tower is not None:
-            model.get_model().initialize_video_modules(
-                model_args=model_args,
-                fsdp=training_args.fsdp
-            )
             video_tower = model.get_video_tower()
+            if video_tower is None:
+                model.get_model().initialize_video_modules(
+                    model_args=model_args,
+                    fsdp=training_args.fsdp
+                )
+                video_tower = model.get_video_tower()
+            if not video_tower.is_loaded:
+                # print('load video tower')
+                video_tower.load_model()
             video_tower.to(dtype=torch.bfloat16 if training_args.bf16 else torch.float16, device=training_args.device)
 
             data_args.video_processor = video_tower.video_processor
@@ -853,19 +867,6 @@ def train(attn_implementation=None):
     # for p in model.lm_head.parameters():
     #     p.requires_grad = False
     #################
-    if training_args.bits in [4, 8]:
-        from peft.tuners.lora import LoraLayer
-        for name, module in model.named_modules():
-            if isinstance(module, LoraLayer):
-                if training_args.bf16:
-                    module = module.to(torch.bfloat16)
-            if 'norm' in name:
-                module = module.to(torch.float32)
-            if 'lm_head' in name or 'embed_tokens' in name:
-                if hasattr(module, 'weight'):
-                    if training_args.bf16 and module.weight.dtype == torch.float32:
-                        module = module.to(torch.bfloat16)
-
     data_module = make_supervised_data_module(tokenizer=tokenizer,
                                               data_args=data_args)
 
