@@ -2,12 +2,16 @@
 
 Official implementation for paper: **Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**
 
+## Release
+- [4/3] DPO data and pipeline
+- [4/2] Project page set up, [paper preprint](https://arxiv.org/abs/2404.01258), Test data pipeline
+
 # Dataset and Model
 In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 
 **Datasets**:
 1. Test data: [ShareGPTVideo/test_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/test_video_and_instruction/tree/main)
-2. Fine-tuning data: TODO
+2. Fine-tuning data: [ShareGPTVideo/train_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/blob/main/README.md)
 3. Pre-training data: TODO
 
 **Models**:
@@ -19,6 +23,9 @@ In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 ```bash
 # setup requirements
 source setup/setup_env.sh
+
+# need to fill in required path and API tokens at
+set_path.sh
 ```
 
 # inference example
@@ -86,3 +93,18 @@ videollava_dpo \
 ShareGPTVideo/LLaVA-Hound-DPO
 ```
 More details including discussion, other SOTA model testing, customized model testing, refer to [test readme](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/test/README.md)
+
+# Training
+DPO training refer to [DPO data setup and training](llava_hound_dpo/dpo_scripts/README.md)
+
+# Reference
+```
+@misc{zhang2024direct,
+      title={Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward}, 
+      author={Ruohong Zhang and Liangke Gui and Zhiqing Sun and Yihao Feng and Keyang Xu and Yuanhan Zhang and Di Fu and Chunyuan Li and Alexander Hauptmann and Yonatan Bisk and Yiming Yang},
+      year={2024},
+      eprint={2404.01258},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
