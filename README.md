@@ -3,7 +3,7 @@
 Official implementation for paper: **Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**
 
 ## Release
-- [4/3] DPO data and pipeline
+- [4/3] [DPO 17k data + training script](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/dpo_scripts/README.md), [pre-training video 900k + image 650k](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md)
 - [4/2] Project page set up, [paper preprint](https://arxiv.org/abs/2404.01258), Test data pipeline
 
 # Dataset and Model
@@ -11,8 +11,11 @@ In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 
 **Datasets**:
 1. Test data: [ShareGPTVideo/test_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/test_video_and_instruction/tree/main)
-2. Fine-tuning data: [ShareGPTVideo/train_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/blob/main/README.md)
-3. Pre-training data: TODO
+   - original videos are released at [ShareGPTVideo/test_raw_video_data](https://huggingface.co/datasets/ShareGPTVideo/test_raw_video_data) in case of need.
+2. Train data [ShareGPTVideo/train_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/blob/main/README.md):
+   - 900k detailed caption  [caption](n/pretrain/video_caption_pretrain.jsonl),
+   - 900k frames data: [300k](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/train_300k) for finetuning, plus the rest [600k](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/train_600k), in total 900k for pre-training.
+
 
 **Models**:
 1. Pre-trained ckpt on large scale video (and image) caption: [ShareGPTVideo/LLaVA-Hound-Pretrain](ShareGPTVideo/LLaVA-Hound-Pretrain)
