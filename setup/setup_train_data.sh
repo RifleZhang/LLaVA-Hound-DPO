@@ -7,7 +7,7 @@ video_zip_dir=$VIDEO_DATA_DIR/train_zip
 mkdir -p $video_zip_dir
 cd $video_zip_dir
 
-num_chunks=16
+num_chunks=15
 for i in $(seq 0 $num_chunks); do
     chunk_path=https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/resolve/main/train_300k/chunk_${i}.tar.gz?download=true
     wget -c -O chunk_${i}.tar.gz $chunk_path &
