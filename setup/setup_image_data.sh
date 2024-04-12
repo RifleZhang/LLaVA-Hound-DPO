@@ -10,11 +10,12 @@ cd $laion_root
 
 mkdir -p image_chunks
 
-## download
+# download
 for ((i=0; i<10; i++))
 do
     wget -c -O image_chunks/images_$i.zip https://huggingface.co/datasets/FreedomIntelligence/ALLaVA-4V/resolve/main/allava_laion/image_chunks/images_$i.zip?download=true &
 done
+wait
 
 cd $laion_root
 ## unzip 
