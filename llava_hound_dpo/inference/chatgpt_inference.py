@@ -136,13 +136,15 @@ def chatgpt_inference(data, prompt_template, output_dir, output_path, num_tasks=
             if os.path.exists(output_path):
                 combined_contents = load_jsonl(output_path)
                 combined_contents += contents
+            else:
+                combined_contents = contents
+                save_jsonl(output_path, combined_contents)
+            if len(combined_contents) > 0:
                 result_idx = set([item['id'] for item in combined_contents])
                 # missing_data = [item for i, item in enumerate(data) if i not in result_idx]
                 missing_data = [item for item in data if item['id'] not in result_idx]
                 data = missing_data
-                logger.info(f"found resulting file, impute missing data: {len(data)}")
-            else:
-                combined_contents = contents
+                logger.info(f"found intermediate results, impute missing data: {len(data)}")
 
             # Break the loop when there are no incomplete files
             if len(data) == 0:
