@@ -1,8 +1,11 @@
 # <h1>LLaVA-Hound:<br> Video Large Multimodal Models from Large-scale Training</h1>
 
-Official implementation for paper: **Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**
+Official implementation for paper: 
+
+[**Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**](https://arxiv.org/abs/2404.01258)
 
 ## Release
+- [4/14] [Video SFT Data and script](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md)
 - [4/3] [DPO 17k data + training script](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/dpo_scripts/README.md), [pre-training video 900k + image 650k](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md)
 - [4/2] Project page set up, [paper preprint](https://arxiv.org/abs/2404.01258), Test data pipeline
 
@@ -15,6 +18,8 @@ In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 2. Train data [ShareGPTVideo/train_video_and_instruction](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/blob/main/README.md):
    - 900k detailed caption  [caption](n/pretrain/video_caption_pretrain.jsonl),
    - 900k frames data: [300k](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/train_300k) for finetuning, plus the rest [600k](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/train_600k), in total 900k for pre-training.
+   - [video qa data](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/video_instruction/train/qa): 900k qa, and 240k subset used in our experiments.
+   - [video instruction data for sft](https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/tree/main/video_instruction/train/sft): we provide image instruction, mix-up video caption and qa for sft, see [sft training](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md) for usage.
 
 
 **Models**:
