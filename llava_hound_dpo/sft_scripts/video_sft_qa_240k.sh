@@ -1,24 +1,22 @@
-model_name_or_path=${1:-"lmsys/vicuna-7b-v1.5"}
-output_dir=${2:-"$SAVE_DIR/LLaVA-Hound-Pretrain"}
+model_name_or_path=${1:-"ShareGPTVideo/LLaVA-Hound-SFT-Image_only"}
+output_dir=${2:-"$SAVE_DIR/LLaVA-Hound-SFT"}
 
 mkdir -p $output_dir
 
 cache_dir=$CACHE_DIR
 export cache_dir=$cache_dir
 
-export WANDB_MODE=disabled
+# export WANDB_MODE=disabled
 
 gpu_ids=0,1,2,3,4,5,6,7
 export CUDA_VISIBLE_DEVICES=$gpu_ids
 n_gpu=$(echo $gpu_ids | tr "," "\n" | wc -l)
 echo "Using $n_gpu GPUs: $gpu_ids"
 
-mm_adapter_path=$SAVE_DIR/Video-LLaVA-MLP-Adapter/mm_projector.bin
-
 # DATA
-DATA_ROOT=$TRAIN_DATA_DIR/pretrain
+DATA_ROOT=$TRAIN_DATA_DIR/sft
 
-data_paths="$DATA_ROOT/image_caption_pretrain.jsonl $DATA_ROOT/video_caption_pretrain.jsonl"
+data_paths="$DATA_ROOT/image_instruction_100k.jsonl $DATA_ROOT/video_240k_caption_15k.jsonl"
 sample_ratios="1 1"
 
 video_dir=$TRAIN_VIDEO_DIR
@@ -39,7 +37,6 @@ torchrun --nproc_per_node=$n_gpu --master_port=$port llava/train/train_mem.py \
     --X "Video" "Image" \
     --video_tower LanguageBind/LanguageBind_Video_merge \
     --image_tower LanguageBind/LanguageBind_Image \
-    --pretrain_mm_mlp_adapter $mm_adapter_path \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -2 \
     --mm_use_x_start_end False \
@@ -56,7 +53,7 @@ torchrun --nproc_per_node=$n_gpu --master_port=$port llava/train/train_mem.py \
     --save_strategy "steps" \
     --save_steps 2000 \
     --save_total_limit 1 \
-    --learning_rate 2e-5 \
+    --learning_rate 5e-6 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
