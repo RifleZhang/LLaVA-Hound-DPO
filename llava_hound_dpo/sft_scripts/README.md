@@ -19,3 +19,19 @@ cd llava_hound
 bash sft_scripts/pretrain.sh
 ```
 
+# SFT script
+Train with image instruction (600k) and video instruction (240k + 15k caption mixup) with the following command:
+```bash
+bash sft_scripts/video_sft.sh
+```
+
+Our ckpt follows the two-step training. To exactly replicate our ckpt, use:
+```bash
+# image instruction 600k + 300k video caption finetuning
+bash sft_scripts/video_sft_with_image_instruction_pretrain.sh.sh
+# image instruction 100k + 240k video qa
+bash sft_scripts/video_sft_qa_240k.sh
+```
+
+
+
