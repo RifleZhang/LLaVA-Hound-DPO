@@ -1,4 +1,9 @@
 # instruction
+mkdir -p $TRAIN_DATA_DIR/sft
+wget -c -O $TRAIN_DATA_DIR/sft/image_instruction_100k.jsonl https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/resolve/main/video_instruction/train/sft/image_instruction_100k.jsonl?download=true
+
+wget -c -O $TRAIN_DATA_DIR/sft/image_instruction_600k.jsonl https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/resolve/main/video_instruction/train/sft/image_instruction_600k.jsonl?download=true
+
 mkdir -p $TRAIN_DATA_DIR/pretrain
 wget -c -O $TRAIN_DATA_DIR/pretrain/image_caption_pretrain.jsonl https://huggingface.co/datasets/ShareGPTVideo/train_video_and_instruction/resolve/main/video_instruction/train/pretrain/image_caption_pretrain.jsonl?download=true
 
