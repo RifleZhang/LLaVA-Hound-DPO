@@ -13,7 +13,7 @@ bash setup/setup_pretrain_data.sh
 bash setup/setup_image_data.sh
 ```
 
-# pretrain script
+# Pretrain script
 ```
 cd llava_hound
 bash sft_scripts/pretrain.sh
@@ -22,6 +22,9 @@ bash sft_scripts/pretrain.sh
 # SFT script
 Train with image instruction (600k) and video instruction (240k + 15k caption mixup) with the following command:
 ```bash
+# follow setup
+# bash setup/setup_image_data.sh
+# bash setup/setup_train_data.sh
 bash sft_scripts/video_sft.sh
 ```
 
