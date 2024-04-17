@@ -27,7 +27,7 @@ In [Huggingface Repo](https://huggingface.co/ShareGPTVideo), we release
 2. Fine-tuned ckpt on video (and image) instruction: [ShareGPTVideo/LLaVA-Hound-SFT](https://huggingface.co/ShareGPTVideo/LLaVA-Hound-SFT)
 3. DPO ckpt with 17k video preference data: [ShareGPTVideo/LLaVA-Hound-DPO](https://huggingface.co/ShareGPTVideo/LLaVA-Hound-DPO)
 4. Additionaly, [ShareGPTVideo/LLaVA-Hound-SFT-Image_only](https://huggingface.co/ShareGPTVideo/LLaVA-Hound-SFT-Image_only/settings)
-# setup:
+# Setup:
 ```bash
 # setup requirements
 source setup/setup_env.sh
@@ -157,3 +157,10 @@ Pretrain + SFT refer to [Pretrain + SFT](https://github.com/RifleZhang/LLaVA-Hou
       primaryClass={cs.CV}
 }
 ```
+
+# Acknowledgement
+Code is build updo the following projects:
+- [Video-LLaVA](https://github.com/PKU-YuanGroup/Video-LLaVA) as the LMM architecture
+- [trl](https://github.com/huggingface/trl) for DPO implementation
+
+Thanks for their great work!
