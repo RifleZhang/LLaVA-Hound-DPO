@@ -36,7 +36,7 @@ source setup/setup_env.sh
 set_path.sh
 ```
 
-# inference example
+# Inference Example for DPO/SFT Model
 ```bash
 cd llava_hound_dpo
 sudo apt-get install ffmpeg
@@ -47,9 +47,10 @@ from llava.model.builder import load_pretrained_model
 from llava.mm_utils import get_model_name_from_path
 from inference.inference_utils import ModelInference, decode2frame
 
-video_path = "example/sample_msrvtt.mp4"
+video_path = "examples/sample_msrvtt.mp4"
 
-model_path = "ShareGPTVideo/LLaVA-Hound-DPO"
+# options ["ShareGPTVideo/LLaVA-Hound-DPO", "ShareGPTVideo/LLaVA-Hound-SFT", "ShareGPTVideo/LLaVA-Hound-SFT-Image_only"]
+model_path = "ShareGPTVideo/LLaVA-Hound-DPO" 
 model_name = get_model_name_from_path(model_path)
 tokenizer, model, processor, context_len = load_pretrained_model(model_path, model_base = None, model_name=model_name, cache_dir=os.environ['CACHE_DIR'])
 inference_model = ModelInference(model=model, tokenizer=tokenizer, processor=processor, context_len=context_len)
@@ -74,6 +75,44 @@ response = inference_model.generate(
 )
 print(response)
 ```
+
+# Inference Example for Detailed Caption Model
+To generate detailed video captions with our pretrained ckpt use
+```python
+import numpy as np
+from llava.model.builder import load_pretrained_model
+from llava.mm_utils import get_model_name_from_path
+from inference.inference_utils import ModelInference, decode2frame, detail_templates
+
+video_path = "examples/sample_msrvtt.mp4"
+
+model_path = "ShareGPTVideo/LLaVA-Hound-Pretrain"
+model_name = get_model_name_from_path(model_path)
+tokenizer, model, processor, context_len = load_pretrained_model(model_path, model_base = None, model_name=model_name, cache_dir=os.environ['CACHE_DIR'])
+inference_model = ModelInference(model=model, tokenizer=tokenizer, processor=processor, context_len=context_len)
+
+question = np.random.choice(detail_templates) # use pretrained template questions
+
+# our pipeline
+frame_dir, _ = os.path.splitext(video_path)
+decode2frame(video_path, frame_dir, verbose=True)
+response = inference_model.generate(
+    question=question,
+    modal_path=frame_dir,
+    temperature=0,
+)
+print(response)
+
+# using decord 
+response = inference_model.generate(
+    question=question,
+    modal_path=video_path,
+    temperature=0,
+    video_decode_backend="decord",
+)
+print(response)
+```
+
 # Testing with one-line command 
 ```bash
 # setup data
