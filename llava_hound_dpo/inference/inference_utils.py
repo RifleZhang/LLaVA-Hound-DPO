@@ -10,9 +10,30 @@ from llava.conversation import conv_templates, SeparatorStyle
 from llava.mm_utils import get_model_name_from_path, tokenizer_X_token, KeywordsStoppingCriteria
 from llava.constants import DEFAULT_X_START_TOKEN, DEFAULT_X_TOKEN, DEFAULT_X_END_TOKEN, X_TOKEN_INDEX
 
+detail_templates = [
+    "Provide a comprehensive analysis of the video's content and themes.",
+    "Elaborate on the visual and narrative elements of the video in detail.",
+    "Describe every scene and its significance in the video.",
+    "Share a detailed breakdown of the video's storyline and visuals.",
+    "Explain the video's components, including its characters, setting, and plot.",
+    "Offer a detailed interpretation of the video's message and imagery.",
+    "Narrate the video's unfolding events in a descriptive manner.",
+    "Analyze the video, focusing on its cinematography and narrative structure.",
+    "Dissect the video's content, explaining each element thoroughly.",
+    "Walk through the video, detailing its key moments and features.",
+    "Write an in-depth depiction of the video, covering all its aspects.",
+    "Detail the video's plot development, character arcs, and thematic elements.",
+    "Illustrate the video's narrative journey, scene by scene, with attention to detail.",
+    "Provide an exhaustive description of the video content.",
+    "Elaborate on all aspects of the video you are viewing.",
+    "Convey the narrative and visual elements of the video in detail.",
+    "Explore the thematic and visual aspects of the video comprehensively.",
+    "Write a comprehensive depiction of the entire video clip.",
+    "Characterize each scene of the video using a detailed description."
+]
 
-MODAL_TOKEN_LIST=["<video>", "<image>"
-                  ]
+MODAL_TOKEN_LIST=["<video>", "<image>"]
+
 def remove_special_tokens(text):
     for token in MODAL_TOKEN_LIST:
         if token in text:
