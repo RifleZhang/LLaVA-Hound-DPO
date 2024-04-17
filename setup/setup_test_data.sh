@@ -1,5 +1,5 @@
 cd setup
-source set_path.sh
+# source set_path.sh # run this first
 
 repo_id=ShareGPTVideo/test_video_and_instruction
 local_dir=$DATA_DIR
@@ -17,6 +17,7 @@ python3 setup_test_data.py --repo_id $repo_id \
 
 data_names=("msrvtt" "msvd" "tgif" 'ssv2' 'actnet' 'vidal' 'webvid')
 for data_name in ${data_names[@]}; do
-    tar -xzvf $TEST_VIDEO_DIR/${data_name}.tar.gz -C $TEST_VIDEO_DIR
+    tar -xzvf $TEST_VIDEO_DIR/${data_name}.tar.gz -C $TEST_VIDEO_DIR &
 done
-
+wait
+echo "Done decompressing all video data."

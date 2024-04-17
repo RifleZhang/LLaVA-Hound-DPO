@@ -15,7 +15,6 @@ from typing import Any, Dict, List, Optional, Union
 import fire
 from logzero import logger
 from data_processing.utils import load_jsonl, save_jsonl, load_json, save_json, load_pickle
-from data_processing.utils import parse_single_file
 
 def get_score(response):
     try:

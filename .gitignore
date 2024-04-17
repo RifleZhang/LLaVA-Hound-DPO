@@ -1,4 +1,5 @@
 data_preparation
+exp
 data_processing
 setup/set_path_secret.sh
 */model_zoo
