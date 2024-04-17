@@ -144,6 +144,8 @@ More details including discussion, other SOTA model testing, customized model te
 # Training
 DPO training refer to [DPO data setup and training](llava_hound_dpo/dpo_scripts/README.md)
 
+Pretrain + SFT refer to [Pretrain + SFT](https://github.com/RifleZhang/LLaVA-Hound-DPO/tree/main/llava_hound_dpo/sft_scripts)
+
 # Reference
 ```
 @misc{zhang2024direct,
