@@ -34,9 +34,9 @@ Score: <an integer score of quality from 1-5>
 '''
 
 client = openai.AzureOpenAI(
-    azure_endpoint="https://search-va.byteintl.net/gpt/openapi/online/multimodal/crawl/",
-    api_version="2023-09-01-preview",
-    api_key="zo5Pr2NPcvmS6alcZpuAKD6UG5H0oIgl",
+    azure_endpoint="",
+    api_version="",
+    api_key="",
 )
 
 def parse_output(result):
