@@ -148,13 +148,11 @@ Pretrain + SFT refer to [Pretrain + SFT](https://github.com/RifleZhang/LLaVA-Hou
 
 # Reference
 ```
-@misc{zhang2024direct,
-      title={Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward}, 
-      author={Ruohong Zhang and Liangke Gui and Zhiqing Sun and Yihao Feng and Keyang Xu and Yuanhan Zhang and Di Fu and Chunyuan Li and Alexander Hauptmann and Yonatan Bisk and Yiming Yang},
-      year={2024},
-      eprint={2404.01258},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{zhang2024direct,
+  title={Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward},
+  author={Zhang, Ruohong and Gui, Liangke and Sun, Zhiqing and Feng, Yihao and Xu, Keyang and Zhang, Yuanhan and Fu, Di and Li, Chunyuan and Hauptmann, Alexander and Bisk, Yonatan and others},
+  journal={arXiv preprint arXiv:2404.01258},
+  year={2024}
 }
 ```
 
