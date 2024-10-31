@@ -4,7 +4,13 @@ Official implementation for paper:
 
 [**Direct Preference Optimization of Video Large Multimodal Models from Language Model Reward**](https://arxiv.org/abs/2404.01258)
 
+Related:
+
+[**Improve Vision Language Model Chain-of-thought Reasoning**](https://arxiv.org/abs/2410.16198)
+
 ## Release
+- [10/30] Following requests, release 50k raw training videos of [activityNet](https://huggingface.co/datasets/ShareGPTVideo/train_raw_video)
+- [10/22] Related work on [VLM CoT Reasoning](https://arxiv.org/abs/2410.16198) with distillation, sft and RL. [LLaVA-Reasoner-DPO](https://github.com/RifleZhang/LLaVA-Reasoner-DPO)
 - [4/14] [Video SFT Data and script](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md)
 - [4/3] [DPO 17k data + training script](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/dpo_scripts/README.md), [pre-training video 900k + image 650k](https://github.com/RifleZhang/LLaVA-Hound-DPO/blob/main/llava_hound_dpo/sft_scripts/README.md)
 - [4/2] Project page set up, [paper preprint](https://arxiv.org/abs/2404.01258), Test data pipeline
